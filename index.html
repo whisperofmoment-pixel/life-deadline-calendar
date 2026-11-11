@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>생활 기한 알림 달력</title>
 <meta name="apple-mobile-web-app-title" content="기한 달력">
-<meta name="description" content="가족의 생일, 자동차검사, 면허, 여권, 전월세 계약, 약정 만료 같은 생활 기한을 한 번에 정리해 휴대폰 달력 알림으로 넣어 주는 개인 제작 도구입니다.">
+<meta name="description" content="가족의 생일, 자동차검사, 면허, 여권, 전월세 계약, 약정 만료 같은 생활 기한을 한 번에 정리해 휴대폰 달력에 넣을 수 있는 파일(일정마다 알림 설정 포함)로 만들어 주는 개인 제작 도구입니다.">
 <meta name="robots" content="noindex">
 <style>
 :root {
@@ -67,7 +67,7 @@ footer p { margin: 4px 0; }
 <body>
 <main>
   <h1>생활 기한 알림 달력</h1>
-  <p class="lead">가족 생일(음력 포함), 자동차검사, 면허, 여권, 전월세 계약, 약정 만료까지 한 번에 정리해서 휴대폰 달력에 알림으로 넣어 드려요. 가입 없이 쓰고, 입력한 내용은 이 휴대폰 밖으로 나가지 않아요.</p>
+  <p class="lead">가족 생일(음력 포함), 자동차검사, 면허, 여권, 전월세 계약, 약정 만료까지 한 번에 정리해서 휴대폰 달력에 넣을 수 있는 파일로 만들어 드려요(일정마다 그날 아침 알림 설정 포함). 가입 없이 쓰고, 입력한 내용은 서버로 보내지 않아요(이 휴대폰 안에서 계산).</p>
   <p class="hint">시안 v0(2026-11-11). 기준 확인 중인 항목은 <span class="badge">확인 중</span>으로 표시했어요.</p>
 
   <section>
@@ -85,7 +85,7 @@ footer p { margin: 4px 0; }
       <div class="f"><label for="carIns">자동차보험 끝나는 날</label><input type="date" id="carIns"><div class="where">보험증권이나 보험사 앱의 보험기간</div></div>
       <div class="tog"><input type="checkbox" id="carTax" checked><label for="carTax"><b>자동차세 연납 신청 알림</b><span>1월에 신청하면 공제가 가장 커요. 처음 신청하는 해에 특히 놓치기 쉬워요</span></label></div>
     </div>
-    <div class="tog"><input type="checkbox" id="hasLease"><label for="hasLease"><b>전월세 계약이 있어요</b><span>계약 갱신을 요구하거나 거절할 수 있는 기간을 챙겨요</span></label></div>
+    <div class="tog"><input type="checkbox" id="hasLease"><label for="hasLease"><b>전월세 계약이 있어요</b><span>계약 갱신 요구(세입자)나 갱신 거절 통지(집주인)를 할 수 있는 기간을 챙겨요. 집주인은 정당한 사유가 있어야 거절할 수 있어요(주택임대차보호법 제6조의3)</span></label></div>
     <div id="leaseBox" class="sub" hidden>
       <div class="f"><label>나는</label><div class="seg" id="leaseRole"><button type="button" data-v="tenant" class="on">세입자</button><button type="button" data-v="owner">집주인</button></div></div>
       <div class="f"><label for="leaseEnd">계약 끝나는 날</label><input type="date" id="leaseEnd"><div class="where">임대차계약서의 계약 기간 마지막 날(예: 2025-03-10~2027-03-09이면 2027-03-09). 상가는 해당 안 돼요</div></div>
@@ -101,10 +101,10 @@ footer p { margin: 4px 0; }
       <div class="f"><label for="rentalName">무엇</label><input type="text" id="rentalName" placeholder="예: 정수기"></div>
       <div class="f"><label for="rentalEnd">의무 사용 기간 끝나는 날</label><input type="date" id="rentalEnd"></div>
     </div>
-    <div class="tog"><input type="checkbox" id="hasClaim"><label for="hasClaim"><b>실손보험 청구 안 한 진료가 있어요</b><span>청구할 수 있는 기간(진료일부터 3년)이 끝나기 전에</span></label></div>
+    <div class="tog"><input type="checkbox" id="hasClaim"><label for="hasClaim"><b>실손보험 청구 안 한 진료가 있어요</b><span>청구할 수 있는 기간(진료일부터 3년으로 추정, 상법 제662조)이 끝나기 전에</span></label></div>
     <div id="claimBox" class="sub" hidden><div class="f"><label for="claimDate">진료 받은 날(입원은 입원 첫날)</label><input type="date" id="claimDate"></div></div>
-    <div class="tog"><input type="checkbox" id="hasInherit"><label for="hasInherit"><b>가족이 돌아가셔서 상속 정리가 필요해요</b><span>빚까지 물려받지 않도록, 상속 포기나 한정승인 신고 기한(3개월)을 챙겨요</span></label></div>
-    <div id="inheritBox" class="sub" hidden><div class="f"><label for="inheritDate">돌아가신 것과 내가 상속인이 된 것을 안 날</label><input type="date" id="inheritDate"><div class="where">모르면 돌아가신 날을 넣으세요. 기간 계산이 걱정되면 가정법원이나 법률 상담으로 확인하세요</div></div></div>
+    <div class="tog"><input type="checkbox" id="hasInherit"><label for="hasInherit"><b>가족이 돌아가셔서 상속 정리가 필요해요</b><span>상속 포기나 한정승인 신고 기한(3개월)을 챙겨요. 빚이 더 많을 수 있다면 가족 전체에 영향이 있어 법률 상담을 권해요. 달력에는 '가족 서류 기한'으로 들어가요</span></label></div>
+    <div id="inheritBox" class="sub" hidden><div class="f"><label for="inheritDate">돌아가신 것과 내가 상속인이 된 것을 안 날</label><input type="date" id="inheritDate"><div class="where">모르면 돌아가신 날을 넣으세요. 기간 계산이 걱정되면 가정법원이나 법률 상담으로 확인하세요. 빚이 더 많은 것을 나중에 알았다면 그 사실을 안 날부터 3개월 안에 한정승인을 할 수 있는 경우가 있어요(민법 제1019조제3항). 이 경우는 날짜를 계산하지 않으니 변호사 상담을 권해요</div></div></div>
     <details><summary>직접 추가(기프티콘, 상품권, 무료 체험 해지 등)</summary>
       <div id="customs"></div>
       <button type="button" class="ghost" id="addCustom">항목 추가</button>
@@ -122,22 +122,46 @@ footer p { margin: 4px 0; }
     <p class="hint">언제 무엇이 오는지 확인하고, 이상하면 위에서 고치세요.</p>
     <div class="list" id="list"></div>
     <div class="note">
-      <p>아이폰: 버튼을 누르면 '모든 일정 추가' 창이 떠요. 한 번에 들어가요.</p>
-      <p>안드로이드: 구글 캘린더는 휴대폰 브라우저에서 calendar.google.com 설정의 가져오기로 받은 파일을 넣으세요(새 캘린더를 만들고 기본 알림을 켠 뒤 넣으면 알림이 함께 와요). 받은 파일을 눌러 바로 여는 방법은 <span class="badge">확인 중</span></p><p>알림이 빠져도 일정 자체가 "며칠 전" 날짜에 들어가 있어서 달력에서 보여요.</p>
+      <p>아이폰 사파리: 버튼을 누르면 '모든 일정 추가' 창이 떠요. 한 번에 들어가요.</p>
+      <p>안드로이드: 구글 캘린더 앱에는 파일 가져오기 메뉴가 없어요. 컴퓨터에서 calendar.google.com 설정 &gt; 가져오기로 받은 파일을 넣으면 휴대폰 구글 캘린더에도 들어와요. 가져온 일정의 알림이 유지되는지, 휴대폰 크롬의 '데스크톱 사이트'로 가져오기, 갤럭시 삼성 캘린더에서 파일 바로 열기는 <span class="badge">확인 중</span></p><p>알림이 빠져도 일정 자체가 "며칠 전" 날짜에 들어가 있어서 달력에서 보여요.</p>
     </div>
-    <div class="tog"><input type="checkbox" id="remember"><label for="remember"><b>이 휴대폰에 입력 기억하기</b><span>내년에 다시 열면 그대로 남아 있어요. 다른 곳으로 보내지 않아요</span></label></div>
+    <div class="tog"><input type="checkbox" id="remember"><label for="remember"><b>이 휴대폰에 입력 기억하기</b><span>이 브라우저에만 남아요. 오래 열지 않으면 브라우저가 지울 수 있어요. 끄면 바로 지워져요. 여러 사람이 함께 쓰는 기기에서는 켜지 마세요</span></label></div>
   </section>
 
   <footer>
-    <p>관계 기관과 관계없는 개인이 공개된 법령과 기관 안내를 바탕으로 만든 참고 도구예요. 법적 기한을 확정하지 않으니, 중요한 날짜는 각 기관 조회로 한 번 더 확인하세요.</p>
-    <p>입력한 내용은 이 휴대폰 안에서만 쓰고 어디로도 보내지 않아요.</p>
+    <p>관계 기관과 관계없는 개인이 공개된 법령과 기관 안내를 바탕으로 만든 참고 도구예요.</p>
+    <p>이 달력은 주택임대차보호법, 민법, 상법, 도로교통법, 자동차관리법 시행규칙, 아동수당법, 지방세법의 2026-11-10 기준 조문을 입력하신 날짜에 적용한 참고용 일정이에요. 기한을 확정하지 않으며 법률 자문이 아니에요. 전월세 갱신 기간은 경계일을 일부러 하루씩 안쪽으로 잡았고, 상속, 실손보험 등 나머지 기한은 계산한 날짜 그대로예요. 어느 기한이든 마지막 날이 토요일이나 공휴일이어도 늘려 잡지 않았어요. 법이 바뀌면 달라질 수 있으니 실제 기한은 계약서와 관계 기관에서 확인하세요.</p>
+    <p>이 도구는 입력값을 서버로 보내지 않아요. 달력에 넣은 뒤에는 쓰시는 달력(아이클라우드, 구글 등)의 동기화 설정에 따라 저장돼요. 직접 추가한 항목 이름은 달력과 잠금화면에 그대로 보이니 민감한 말은 피하세요.</p>
+    <p>음력 변환: korean-lunar-calendar 0.4.0(MIT License, Copyright (c) 2022 Jinil Lee), 라이선스 전문은 이 페이지 코드에 있어요.</p>
   </footer>
 </main>
 
-<div class="bar"><div class="in"><span class="count" id="count">알림 0개</span><button class="main" id="btnIcs" type="button">휴대폰 달력에 넣기</button></div></div>
+<div class="bar"><div class="in"><span class="count" id="count">알림 0개</span><button class="main" id="btnIcs" type="button">달력 파일 받기</button></div></div>
 
 <script id="klc">
-/*! korean-lunar-calendar 0.4.0 (https://github.com/usingsky/korean_lunar_calendar_js) | MIT License | Copyright (c) 2022 Jinil Lee | 한국천문연구원(KASI) 음양력 자료 기준, 음력 2050-11-18까지 */
+/*! korean-lunar-calendar 0.4.0 (https://github.com/usingsky/korean_lunar_calendar_js) | MIT License | Copyright (c) 2022 Jinil Lee | 한국천문연구원(KASI) 음양력 자료 기준, 음력 2050-11-18까지
+MIT License
+
+Copyright (c) 2022 Jinil Lee
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 //#region src/korean-lunar-data.ts
 var LUNAR_CALENDAR_DATA = {
 	KOREAN_LUNAR_MIN_VALUE: 10000101,
@@ -1534,8 +1558,8 @@ var LD = (function () {
     function push(date, title, note, who, opt) {
       opt = opt || {};
       if (!opt.yearly && date < today) return;
-      if (!opt.yearly && !opt.far && date > end) return;
-      out.push({ date: iso(date), title: title, note: note || '', who: who || '', yearly: !!opt.yearly, pending: !!opt.pending, far: date > end, key: opt.key || title });
+      // 1년 넘게 남은 기한도 파일에 넣는다(미리보기에서만 접음). 실손 3년, 2년 계약 등이 빠지지 않게
+      out.push({ date: iso(date), title: title, note: note || '', who: who || '', yearly: !!opt.yearly, pending: !!opt.pending, far: date > end, key: opt.key || title, rrule: opt.rrule || '' });
     }
     (s.people || []).forEach(function (p) {
       var who = p.name;
@@ -1549,9 +1573,16 @@ var LD = (function () {
             push(x.date, who + ' 생일(' + lab + ')', '한국천문연구원 음양력 자료 기준으로 바꾼 양력 날짜', who, { far: true, key: 'lb-' + who + '-' + iso(x.date) });
           });
         } else {
-          var b = d(p.bday), nb = nextYearly(b.getUTCMonth() + 1, b.getUTCDate(), today);
-          push(add(nb, -7), who + ' 생일 일주일 전', '선물이나 식사 준비', who, { yearly: true });
-          push(nb, who + ' 생일', '', who, { yearly: true });
+          var b = d(p.bday);
+          if (b.getUTCMonth() === 1 && b.getUTCDate() === 29) {   // 2월 29일생: 해마다 2월 마지막 날(윤년 29일, 평년 28일)
+            var fy = today.getUTCFullYear(), fe = new Date(Date.UTC(fy, 2, 0)); if (fe < today) fe = new Date(Date.UTC(fy + 1, 2, 0));
+            push(add(fe, -7), who + ' 생일 일주일 전', '선물이나 식사 준비', who, { yearly: true, rrule: 'FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=-8' });
+            push(fe, who + ' 생일(2월 29일생, 평년엔 28일)', '', who, { yearly: true, rrule: 'FREQ=YEARLY;BYMONTH=2;BYMONTHDAY=-1' });
+          } else {
+            var nb = nextYearly(b.getUTCMonth() + 1, b.getUTCDate(), today);
+            push(add(nb, -7), who + ' 생일 일주일 전', '선물이나 식사 준비', who, { yearly: true });
+            push(nb, who + ' 생일', '', who, { yearly: true });
+          }
         }
       }
       if (p.license) { var L = d(p.license);
@@ -1559,7 +1590,7 @@ var LD = (function () {
         push(add(L, -30), who + ' 운전면허 갱신 30일 전', '', who);
         push(add(L, -7), who + ' 운전면허 갱신 7일 전', '', who); }
       if (p.passport) { var X = d(p.passport);
-        push(addM(X, -9), who + ' 여권 만료 9개월 전', '많은 나라가 입국 때 6개월 이상 남은 여권을 요구해요. 해외 일정이 있으면 미리', who);
+        push(addM(X, -9), who + ' 여권 만료 9개월 전', '입국 때 여권에 남아 있어야 하는 기간은 나라마다 달라요(외교부 해외안전여행에서 확인). 해외 일정이 있으면 미리', who);
         push(addM(X, -6), who + ' 여권 만료 6개월 전', '', who); }
       if (p.checkup === 'yes') {
         var y = today.getUTCFullYear();
@@ -1567,7 +1598,7 @@ var LD = (function () {
       }
       if (p.kid && p.bday && !p.lunar) { var B = d(p.bday), D60 = add(B, 59);   // R13: 출생일을 첫날로 세어 60일째
         var n14 = D60 >= d('2027-01-21') ? ' 2027-01-21부터 아동수당법이 바뀌어 신청 규정이 달라집니다. 복지로, 주민센터에서 확인하세요.' : '';  // R14
-        push(add(B, 14), who + ' 부모급여, 아동수당 신청 확인', '출생일 포함 60일 안에 신청해야 출생 달부터 받아요. 출생신고 때 함께 신청하면 놓치지 않아요.' + n14, who);
+        push(add(B, 14), who + ' 부모급여, 아동수당 신청 확인', '출생일 포함 60일 안에 신청해야 출생 달부터 받아요. 늦으면 신청한 달부터 받아요. 출생신고 때 함께 신청하면 놓치지 않아요.' + n14, who);
         push(add(D60, -14), who + ' 부모급여 신청 60일째 2주 전', '60일째는 ' + iso(D60) + n14, who);
         push(add(D60, -7), who + ' 부모급여 신청 60일째 7일 전', '', who);
       }
@@ -1584,8 +1615,8 @@ var LD = (function () {
         push(add(M, -10), '자동차보험 만기 10일 전', '', '차');
         push(add(M, -1), '자동차보험 내일 만기', '', '차'); }
       if (s.carTax) {   // R22(1월분만 기본): 공제율은 해마다 조금씩 달라 2026년 값으로 안내
-        push(nextYearly(1, 16, today), '자동차세 연납 신청 시작(1월)', '1월 신청이 공제가 가장 커요(2026년 1월 약 4.58%). 위택스나 지자체에서 신청. 기간 연장 여부는 지자체 공지 확인', '차', { yearly: true });
-        push(nextYearly(1, 28, today), '자동차세 연납 1월 신청 마감 3일 전', '놓치면 3월(약 3.77%), 6월(약 2.5%), 9월(약 1.25%)에도 신청할 수 있어요(2026년 기준)', '차', { yearly: true });
+        push(nextYearly(1, 16, today), '자동차세 연납 신청 시작(1월)', '1월 신청이 공제가 가장 커요(2026년 1월 약 4.58%). 위택스나 지자체에서 신청. 기간 연장 여부는 지자체 공지 확인. 금액은 지자체 고지가 기준', '차', { yearly: true });
+        push(nextYearly(1, 28, today), '자동차세 연납 1월 신청 마감 3일 전', '놓치면 3월(약 3.77%), 6월(약 2.5%), 9월(약 1.25%)에도 신청할 수 있어요(2026년 기준, 해마다 달라짐). 금액은 지자체 고지가 기준', '차', { yearly: true });
       }
     }
     if (s.lease && s.leaseEnd) {   // R1~R5: 시작 = 6개월 전 해당일 다음 날, 마지막 = 2개월 전 해당일 전날(하루씩 안쪽)
@@ -1599,15 +1630,18 @@ var LD = (function () {
       push(add(X, -60), name + ' 끝나기 60일 전', note, '약정'); push(add(X, -30), name + ' 끝나기 30일 전', '', '약정'); push(add(X, -7), name + ' 끝나기 7일 전', '', '약정'); };
     exp(s.phone, s.phoneEnd, '휴대폰 약정', '요금제, 할인 다시 고르기');
     exp(s.rental, s.rentalEnd, (s.rentalName || '렌탈') + ' 의무 사용 기간', '자동 연장 전에 해지, 재계약, 반납 정하기');
-    if (s.claim && s.claimDate) { var C = d(s.claimDate), lim = addM(C, 36);   // R8, R9
-      push(add(C, 30), '실손보험 청구 서류 챙기기', '영수증, 진료비 세부내역서. 청구 기한은 진료일부터 3년(추정, 보험사 확인)', '보험');
-      push(add(lim, -180), '실손보험 청구 기한 6개월 전', '진료일 ' + iso(C) + ' 건', '보험');
-      push(add(lim, -30), '실손보험 청구 기한 30일 전', '진료일 ' + iso(C) + ' 건', '보험'); }
+    if (s.claim && s.claimDate) { var C = d(s.claimDate), lim = addM(C, 36);   // R8, R9: T+7, T+30, M-180, M-30
+      var cn = '진료일 ' + iso(C) + ' 건. 보험금 청구권은 3년간 행사하지 않으면 소멸할 수 있어요(상법 제662조). 이 달력이 진료일부터 계산한 추정 기한은 ' + iso(lim) + '이니 가능한 한 빨리 청구하세요';
+      push(add(C, 7), '실손보험 청구 서류 챙기기', '영수증, 진료비 세부내역서. ' + cn, '보험');
+      push(add(C, 30), '실손보험 청구했나요', cn, '보험');
+      push(add(lim, -180), '실손보험 청구 기한 6개월 전', cn, '보험');
+      push(add(lim, -30), '실손보험 청구 기한 30일 전', cn, '보험'); }
     if (s.inherit && s.inheritDate) { var K = d(s.inheritDate), KL = addM(K, 3);   // R10, R11
-      var kn = '내가 상속인이 된 것을 안 날부터 3개월 안에 가정법원에 상속 포기나 한정승인을 신고하지 않으면 단순승인으로 봐요. 기간 연장은 가정법원에 청구할 수 있어요. 마지막 날 ' + iso(KL);
-      push(add(K, 7), '상속 재산과 빚 조회 시작', kn, '상속');
-      push(add(K, 30), '상속 재산, 빚 확인 중간 점검', '', '상속');
-      [30, 14, 7].forEach(function (k) { push(add(KL, -k), '상속 포기, 한정승인 신고 마감 ' + k + '일 전', k === 30 ? kn : '', '상속'); }); }
+      // 잠금화면에 보이는 제목엔 '상속' 같은 말을 넣지 않는다(원장 5절). 내용은 메모에
+      var kn = '상속 포기, 한정승인 신고 기한. 이 달력이 잡은 마지막 날 ' + iso(KL) + '(토요일, 공휴일이어도 늘려 잡지 않음). 상속인이 된 것을 안 날부터 3개월 안에 가정법원에 상속 포기나 한정승인을 신고하지 않으면 단순승인으로 봐요(민법 제1026조제2호). 그 전에 상속재산을 쓰거나 팔면 단순승인으로 볼 수 있어요(제1026조제1호). 기간 연장은 가정법원에 청구할 수 있어요(제1019조). 접수 기준은 가정법원에 확인하세요. 빚이 더 많은 것을 나중에 알았다면 안 날부터 3개월 안에 한정승인을 할 수 있는 경우가 있어요(제1019조제3항, 변호사 상담 권장)';
+      push(add(K, 7), '가족 서류 기한: 재산과 빚 조회 시작', kn, '상속');
+      push(add(K, 30), '가족 서류 기한: 중간 점검', kn, '상속');
+      [30, 14, 7].forEach(function (k) { push(add(KL, -k), '가족 서류 기한 신고 마감 ' + k + '일 전', kn, '상속'); }); }
     (s.customs || []).forEach(function (c) { if (!c.name || !c.date) return; var D = d(c.date);
       push(add(D, -(+c.before || 7)), c.name + ' ' + (+c.before || 7) + '일 전', '직접 추가한 항목', '직접'); push(D, c.name + ' 마감', '', '직접'); });
     (s.seasonal || []).forEach(function (k) { var x = SEASONAL[k]; if (x) push(nextYearly(x[0], x[1], today), x[2], x[3], '생활', { yearly: true, pending: x[4] }); });
@@ -1640,7 +1674,7 @@ var LD = (function () {
     return res;
   }
   var SEASONAL = {
-    scaling: [11, 1, '올해 스케일링 받았나요', '건강보험 적용 기준은 치과에서 확인하세요', false],
+    scaling: [11, 1, '스케일링 받은 지 1년쯤 됐나요', '마지막 스케일링 뒤 1년쯤 됐다면 치과에 문의하세요. 건강보험 적용 기준은 치과에서 확인', false],
     aircon: [5, 1, '에어컨 청소, 필터 점검', '더워지기 전에', false],
     boiler: [10, 1, '보일러 점검', '추워지기 전에', false],
     flu: [10, 1, '독감 예방접종 시기', '보통 가을에 시작해요. 무료 대상은 보건소 안내 확인', true],
@@ -1657,9 +1691,9 @@ var LD = (function () {
     items.filter(function (i) { return i.date; }).forEach(function (it, n) {
       var ds = it.date.replace(/-/g, ''), nd = new Date(Date.UTC(+ds.slice(0, 4), +ds.slice(4, 6) - 1, +ds.slice(6, 8) + 1)).toISOString().slice(0, 10).replace(/-/g, '');
       L.push('BEGIN:VEVENT', 'UID:ld-' + uid(it) + '@whisperofmoment', 'DTSTAMP:' + stamp + 'T000000Z', 'DTSTART;VALUE=DATE:' + ds, 'DTEND;VALUE=DATE:' + nd,
-        fold('SUMMARY:' + esc(it.title)), fold('DESCRIPTION:' + esc((it.note ? it.note + '\n' : '') + '생활 기한 알림 달력에서 만든 일정')));
-      if (it.yearly) L.push('RRULE:FREQ=YEARLY');
-      L.push('BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + esc(it.title).slice(0, 60), 'TRIGGER:PT9H', 'END:VALARM', 'END:VEVENT');
+        fold('SUMMARY:' + esc(it.title)), fold('DESCRIPTION:' + esc((it.note ? it.note + '\n' : '') + '생활 기한 알림 달력에서 만든 참고용 일정(2026-11-10 기준 법령, 법이 바뀌면 달라질 수 있어요)')));
+      if (it.yearly) L.push('RRULE:' + (it.rrule || 'FREQ=YEARLY'));
+      L.push('BEGIN:VALARM', 'ACTION:DISPLAY', fold('DESCRIPTION:' + esc(Array.from(it.title).slice(0, 60).join(''))), 'TRIGGER:PT9H', 'END:VALARM', 'END:VEVENT');
     });
     L.push('END:VCALENDAR');
     return L.join('\r\n') + '\r\n';
@@ -1674,7 +1708,7 @@ if (typeof module !== 'undefined') module.exports = LD;
   var $ = function (id) { return document.getElementById(id); };
   var WHO = [['me', '나'], ['spouse', '배우자'], ['dad', '아버지'], ['mom', '어머니'], ['kid1', '아이'], ['kid2', '둘째']];
   var on = { me: true };
-  var SEAS = [['scaling', '스케일링 연말 알림(11월)', '올해 아직 안 받았다면 해가 바뀌기 전에', true], ['aircon', '에어컨 청소(5월)', '', true], ['boiler', '보일러 점검(10월)', '', true], ['flu', '독감 예방접종 시기(10월)', '', true], ['tax', '종합소득세 신고 달(5월)', '부업, 프리랜서 소득이 있을 때', false], ['yearend', '연말정산 자료 열리는 날(1월)', '', true]];
+  var SEAS = [['scaling', '스케일링 점검 알림(11월)', '마지막으로 받은 지 1년쯤 됐다면 치과에 문의', true], ['aircon', '에어컨 청소(5월)', '', true], ['boiler', '보일러 점검(10월)', '', true], ['flu', '독감 예방접종 시기(10월)', '', true], ['tax', '종합소득세 신고 달(5월)', '부업, 프리랜서 소득이 있을 때', false], ['yearend', '연말정산 자료 열리는 날(1월)', '', true]];
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function chips() { $('whoChips').innerHTML = WHO.map(function (w) { return '<button type="button" class="chip' + (on[w[0]] ? ' on' : '') + '" data-w="' + w[0] + '">' + w[1] + '</button>'; }).join(''); }
@@ -1732,7 +1766,7 @@ if (typeof module !== 'undefined') module.exports = LD;
       var shown = i.who && i.title.indexOf(i.who + ' ') === 0 ? i.title.slice(i.who.length + 1) : i.title;
       return '<div class="item"><div class="d">' + dt + '<small>' + (i.date ? i.date.slice(0, 4) + ' ' + wd : '') + (i.yearly ? ' 매년' : '') + '</small></div><div class="t">' + (i.who ? '<span class="who">' + esc(i.who) + '</span>' : '') + esc(shown) + (i.pending ? ' <span class="badge">확인 중</span>' : '') + (i.note ? '<small>' + esc(i.note) + '</small>' : '') + '</div></div>';
     }).join('') : '<p class="hint">위에 날짜를 넣으면 여기에 알림이 생겨요.</p>';
-    if (farN) $('list').innerHTML += '<p class="hint" style="margin-top:8px">1년 뒤 일정 ' + farN + '개(음력 생일 앞으로 20년 치 등)도 달력 파일에 함께 들어가요.</p>';
+    if (farN) $('list').innerHTML += '<p class="hint" style="margin-top:8px">1년 뒤 일정 ' + farN + '개(음력 생일 앞으로 20년 치, 1년 넘게 남은 기한 등)도 달력 파일에 함께 들어가요.</p>';
     if ($('remember').checked) { try { localStorage.setItem('ld-v0', JSON.stringify({ on: on, s: s })); } catch (e) {} }
   }
 
